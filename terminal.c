@@ -6488,7 +6488,15 @@ int format_arrow_key(char *buf, Terminal *term, int xkey, int ctrl)
 	    app_flg = 0;
 #endif
 #if 1
-    if (ctrl == 3)
+    if (ctrl == 7)
+        p += sprintf((char *) p, "\x1B[1;8%c", xkey); /* Control+Alt-Shift */
+    else if (ctrl == 6)
+        p += sprintf((char *) p, "\x1B[1;7%c", xkey); /* Control+Alt */
+    else if (ctrl == 5)
+        p += sprintf((char *) p, "\x1B[1;4%c", xkey); /* Alt+Shift */
+    else if (ctrl == 4)
+        p += sprintf((char *) p, "\x1B[1;3%c", xkey); /* Alt */
+    else if (ctrl == 3)
         p += sprintf((char *) p, "\x1B[1;6%c", xkey); /* Control+Shift*/
     else if (ctrl == 2)
         p += sprintf((char *) p, "\x1B[1;5%c", xkey); /* Control */

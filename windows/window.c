@@ -4207,6 +4207,10 @@ static int TranslateKey(UINT message, WPARAM wParam, LPARAM lParam,
     shift_state = ((keystate[VK_SHIFT] & 0x80) != 0)
 	+ ((keystate[VK_CONTROL] & 0x80) != 0) * 2;
 
+#if 1
+    shift_state += left_alt * 4;
+#endif
+
     /* Note if AltGr was pressed and if it was used as a compose key */
     if (!compose_state) {
 	compose_keycode = 0x100;
