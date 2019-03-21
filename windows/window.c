@@ -4556,6 +4556,9 @@ static int TranslateKey(UINT message, WPARAM wParam, LPARAM lParam,
           case VK_LEFT: xkey = 'D'; goto arrow_key;
           case VK_CLEAR: xkey = 'G'; goto arrow_key; /* close enough */
           arrow_key:
+#if 1
+    		shift_state += left_alt * 4;
+#endif
             p += format_arrow_key((char *)p, term, xkey, shift_state & 2);
             return p - output;
 

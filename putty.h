@@ -1651,7 +1651,7 @@ void term_set_trust_status(Terminal *term, bool trusted);
 typedef enum SmallKeypadKey {
     SKK_HOME, SKK_END, SKK_INSERT, SKK_DELETE, SKK_PGUP, SKK_PGDN,
 } SmallKeypadKey;
-int format_arrow_key(char *buf, Terminal *term, int xkey, bool ctrl);
+int format_arrow_key(char *buf, Terminal *term, int xkey, int ctrl);
 int format_function_key(char *buf, Terminal *term, int key_number,
                         bool shift, bool ctrl);
 int format_small_keypad_key(char *buf, Terminal *term, SmallKeypadKey key);

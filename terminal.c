@@ -6632,7 +6632,7 @@ void term_mouse(Terminal *term, Mouse_Button braw, Mouse_Button bcooked,
     term_update(term);
 }
 
-int format_arrow_key(char *buf, Terminal *term, int xkey, bool ctrl)
+int format_arrow_key(char *buf, Terminal *term, int xkey, int ctrl)
 {
     char *p = buf;
 
@@ -6655,6 +6655,26 @@ int format_arrow_key(char *buf, Terminal *term, int xkey, bool ctrl)
 	if (!term->app_keypad_keys)
 	    app_flg = 0;
 #endif
+#if 1
+    if (ctrl == 7)
+        p += sprintf((char *) p, "\x1B[1;8%c", xkey); /* Control+Alt-Shift */
+    else if (ctrl == 6)
+        p += sprintf((char *) p, "\x1B[1;7%c", xkey); /* Control+Alt */
+    else if (ctrl == 5)
+        p += sprintf((char *) p, "\x1B[1;4%c", xkey); /* Alt+Shift */
+    else if (ctrl == 4)
+        p += sprintf((char *) p, "\x1B[1;3%c", xkey); /* Alt */
+    else if (ctrl == 3)
+        p += sprintf((char *) p, "\x1B[1;6%c", xkey); /* Control+Shift*/
+    else if (ctrl == 2)
+        p += sprintf((char *) p, "\x1B[1;5%c", xkey); /* Control */
+    else if (ctrl == 1)
+        p += sprintf((char *) p, "\x1B[1;2%c", xkey); /* Shift */
+    else if (app_flg)
+        p += sprintf((char *) p, "\x1BO%c", xkey); /* Application mode*/
+    else
+        p += sprintf((char *) p, "\x1B[%c", xkey); /* Normal */
+#else
 	/* Useful mapping of Ctrl-arrows */
 	if (ctrl)
 	    app_flg = !app_flg;
@@ -6663,6 +6683,7 @@ int format_arrow_key(char *buf, Terminal *term, int xkey, bool ctrl)
 	    p += sprintf(p, "\x1BO%c", xkey);
 	else
 	    p += sprintf(p, "\x1B[%c", xkey);
+#endif
     }
 
     return p - buf;
